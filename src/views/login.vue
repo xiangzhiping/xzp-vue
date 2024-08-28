@@ -1,168 +1,169 @@
 <template>
-  <div class="el-card" :style="{boxShadow: `var(--el-box-shadow-lighter)` }">
-    <div class="card_head">XIANGZHIPING</div>
-    <div class="card_body">
-      <transition :name="animationDirection">
-        <keep-alive>
-          <component :is="currentComponent" class="card_tab" :key="currentTab"></component>
-        </keep-alive>
-      </transition>
+  <div class="login_container">
+    <div class="login_container_header">
+      XIANGZHIPING
     </div>
-    <div class="card_tail">
-      <el-tooltip content="账号密码登录" placement="bottom" effect="light">
-        <div @click="switchTab('accountPasswordLoginTab')" :class="{ active: currentTab === 'accountPasswordLoginTab'}">
-          <AccountPasswordLoginIcon/>
-        </div>
-      </el-tooltip>
-      <el-tooltip content="验证码登录" placement="bottom" effect="light">
-        <div @click="switchTab('captchaLoginTab')" :class="{ active: currentTab === 'captchaLoginTab'}">
-          <CaptchaLoginIcon/>
-        </div>
-      </el-tooltip>
-      <el-tooltip content="忘记密码" placement="bottom" effect="light">
-        <div @click="switchTab('forgetPasswordTab')" :class="{ active: currentTab === 'forgetPasswordTab'}">
-          <ForgetPasswordIcon/>
-        </div>
-      </el-tooltip>
-      <el-tooltip content="注册账号" placement="bottom" effect="light">
-        <div @click="switchTab('registerAccountTab')" :class="{ active: currentTab === 'registerAccountTab'}">
-          <RegisterAccountIcon/>
-        </div>
-      </el-tooltip>
+    <div class="login_container_pane">
+            <transition :name="transitionName">
+              <keep-alive>
+                <component :is="currentComponent"></component>
+              </keep-alive>
+            </transition>
+    </div>
+    <div class="login_container_footer">
+      <div
+          v-for="(tab, index) in tabs"
+          :key="index"
+          class="login_container_tab"
+          :class="{ active: index === currentIndex }"
+          @click="changeTab(index)"
+      >
+        <el-icon :size="22">
+          <component :is="tab.icon" class="route_icon"/>
+        </el-icon>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import {ref} from 'vue';
-import {
-  AccountPasswordLoginIcon,
-  CaptchaLoginIcon,
-  ForgetPasswordIcon,
-  RegisterAccountIcon
-} from "@/components/icons/index.js";
+import {ref, computed} from "vue";
+import {Odometer, User, Lock, Key, Setting, Message} from '@element-plus/icons-vue'
 import AccountPasswordLogin from '@/components/login/account_password_login.vue';
 import CaptchaLogin from '@/components/login/captcha_login.vue';
 import ForgetPassword from "@/components/login/forget_password.vue";
 import Register from "@/components/login/register_account.vue";
 
-const currentTab = ref('accountPasswordLoginTab');
-const currentComponent = ref(AccountPasswordLogin);
-const animationDirection = ref('slide-fade-right');
-const isAccountPasswordActive = ref(true);
-const isAccountPasswordActiveTitle = ref('账号密码登录');
-const isInactive = ref(false);
-const isActiveIcon = ref(false); // 新增变量用于跟踪激活状态
-
-const tabs = ref([
-  {name: 'accountPasswordLoginTab', component: AccountPasswordLogin},
-  {name: 'captchaLoginTab', component: CaptchaLogin},
-  {name: 'forgetPasswordTab', component: ForgetPassword},
-  {name: 'registerAccountTab', component: Register},
-]);
+const currentComponent = ref(User);
+const tabs = [
+  {name: '账号密码登录', icon: User},
+  {name: '验证码登录', icon: Message},
+  {name: '忘记密码', icon: Lock},
+  {name: '注册账号', icon: Key}
+];
+const currentIndex = ref(0);
+const previousIndex = ref(currentIndex.value);
+const transitionName = computed(() => {
+  return currentIndex.value < previousIndex.value ? 'slide-fade-right' : 'slide-fade-left';
+});
 
 
-const switchTab = (newTabName) => {
-  const tab = tabs.value.find(tab => tab.name === newTabName);
-  if (!tab) return;
-  animationDirection.value = animationDirectionGet(currentTab.value, newTabName);
-  currentTab.value = newTabName;
-  currentComponent.value = tab.component;
-  isInactive.value = true;
-  isActiveIcon.value = true; // 当点击时设为激活状态
-};
-const animationDirectionGet = (currentTabName, newTabName) => {
-  const newIndex = tabs.value.findIndex(tab => tab.name === newTabName);
-  if (tabs.value.findIndex(tab => tab.name === currentTabName) > newIndex) {
-    return 'slide-fade-left';
-  } else {
-    return 'slide-fade-right';
+const changeTab = async (index) => {
+  previousIndex.value = currentIndex.value;
+  currentIndex.value = index;
+  switch (index) {
+    case 0:
+      currentComponent.value = AccountPasswordLogin;
+      break
+    case 1:
+      currentComponent.value = CaptchaLogin;
+      break
+    case 2:
+      currentComponent.value = ForgetPassword;
+      break
+    case 3:
+      currentComponent.value = Register;
   }
-};
+}
 </script>
 
 <style scoped>
-.el-card {
+.login_container {
   width: 500px;
   height: 400px;
-  background: #ffffff;
-  color: #909399;
-  font-family: 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+  border-radius: 7px;
+  border-bottom: 1px solid var(--el-border-color);
+  box-shadow: var(--el-box-shadow-lighter);
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
-
-.card_head {
+.login_container_header{
   width: 100%;
   height: 50px;
+  font-size: 25px;
   font-weight: bold;
-  font-size: 30px;
-  color: #495b70;
+  background: #409EFF;
   display: flex;
   justify-content: center;
-  justify-items: center;
   align-items: center;
-  background: #fff1f1 linear-gradient(to right, #f50a0a, #f56c0a, #fae609, #34fd2d, #0cf6db, #8907ff, #214bfd);
 }
-
-.card_body {
+.login_container_footer {
   width: 100%;
-  flex-grow: 1;
-  position: relative; /* Make it relative for the transition group */
+  height: 50px;
+  background: #13ce66;
+  border-bottom: 1px solid var(--el-border-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.card_tab {
+.login_container_tab {
+  width: 125px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  color: #909399;
+  justify-content: center;
+  align-items: center;
+}
+
+.login_container_tab.active {
+  background: #cadef3;
+  color: #409EFF;
+}
+
+.login_container_pane {
   width: 100%;
   height: 100%;
-  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
 
-.slide-fade-right-enter-active,
-.slide-fade-right-leave-active,
 .slide-fade-left-enter-active,
-.slide-fade-left-leave-active {
-  transition: all 0.7s ease;
-}
-
-.slide-fade-right-enter-from {
-  transform: translate3d(100%, 0, 0);
-}
-
-.slide-fade-right-leave-to {
-  transform: translate3d(-100%, 0, 0);
+.slide-fade-left-leave-active,
+.slide-fade-right-enter-active,
+.slide-fade-right-leave-active {
+  transition: all 0.5s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .slide-fade-left-enter-from {
-  transform: translate3d(-100%, 0, 0);
+  transform: translateX(-100%);
+}
+
+.slide-fade-left-enter-to {
+  transform: translateX(0);
+}
+
+.slide-fade-left-leave-from {
+  transform: translateX(0);
 }
 
 .slide-fade-left-leave-to {
-  transform: translate3d(100%, 0, 0);
+  transform: translateX(100%);
 }
 
-.card_tail {
-  width: 100%;
-  height: 50px;
-  font-size: 15px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+.slide-fade-right-enter-from {
+  transform: translateX(100%);
 }
 
-.card_tail div {
-  width: 40px;
-  height: 40px;
-  font-size: 15px;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  color: #909399;
-  border-radius: 50%;
+.slide-fade-right-enter-to {
+  transform: translateX(0);
 }
 
-.card_tail div.active {
-  background: #ebedf0;
-  border-radius: 50%;
+.slide-fade-right-leave-from {
+  transform: translateX(0);
 }
+
+.slide-fade-right-leave-to {
+  transform: translateX(-100%);
+}
+
 </style>

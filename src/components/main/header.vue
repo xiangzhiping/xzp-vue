@@ -38,7 +38,7 @@ const personalAvatarGetHandle = async () => {
   const avatar = await personalAvatarDownload(link);
   personalAvatarUrl.value = URL.createObjectURL(avatar);
 };
-// personalAvatarGetHandle();
+personalAvatarGetHandle();
 
 const navigateToPersonalHandel = async () => {
   await router.push('/personal')
@@ -46,14 +46,21 @@ const navigateToPersonalHandel = async () => {
 </script>
 
 <style scoped>
+.personal_avatar{
+  width: 52px;
+  height: 50px;
+  margin-right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .el-avatar {
-  width: 53px;
-  height: 53px;
+  width: 45px;
+  height: 45px;
   margin-top: -2px;
   border: 1px solid var(--el-border-color);
   box-shadow: var(--el-box-shadow-lighter);
   color: #495b70;
-  border-radius: 10px;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -61,10 +68,10 @@ const navigateToPersonalHandel = async () => {
 }
 
 .personal_icon {
-  margin-right: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-right: 20px;
 }
 
 .popover_box{

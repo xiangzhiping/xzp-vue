@@ -9,14 +9,14 @@
       <el-table-column prop="email" label="邮箱地址" width="250" align="center"></el-table-column>
       <el-table-column prop="avatar_key" label="头像Key" width="400" show-overflow-tooltip
                        align="center"></el-table-column>
-      <el-table-column prop="login_status" label="登录状态" width="100" align="center">
+      <el-table-column prop="login_status" label="登录状态" width="115" align="center">
         <template #default="{ row }">
           <el-icon :size="18" :color="row.login_status === true ? '#67C23A' : '#F56C6C'">
             <SwitchButton/>
           </el-icon>
         </template>
       </el-table-column>
-      <el-table-column prop="account_status" label="账号状态" width="100" align="center">
+      <el-table-column prop="account_status" label="账号状态" width="120" align="center">
         <template #default="scope">
           <el-switch size="small"
                      v-model="scope.row.account_status"
@@ -25,7 +25,7 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column prop="user_status" label="用户状态" width="100" align="center">
+      <el-table-column prop="user_status" label="用户状态" width="115" align="center">
         <template #default="{ row }">
           <el-icon :size="18" :color="row.user_status === true ? '#67C23A' : '#F56C6C'">
             <User/>
