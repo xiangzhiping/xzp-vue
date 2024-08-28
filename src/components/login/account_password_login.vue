@@ -4,7 +4,11 @@
       <el-form-item prop="account" class="item_form">
         <div class="login_ele">
           <div class="account_password_login_icon">
-            <AccountIcon></AccountIcon>
+            <div>
+              <el-icon :size="22">
+                <User></User>
+              </el-icon>
+            </div>
           </div>
           <div class="account_input">
             <el-input v-model="loginForm.account" placeholder="请输入账号名（邮箱 \ 手机）"></el-input>
@@ -14,7 +18,11 @@
       <el-form-item prop="password" class="item_form">
         <div class="login_ele">
           <div class="account_password_login_icon">
-            <PasswordIcon></PasswordIcon>
+            <div>
+              <el-icon :size="22">
+                <Lock></Lock>
+              </el-icon>
+            </div>
           </div>
           <div class="password_input">
             <el-input v-model="loginForm.password" placeholder="请输入密码"></el-input>
@@ -25,7 +33,11 @@
         <div class="login_ele">
           <div class="image_captcha_div">
             <div class="account_password_login_icon">
-              <ImageCaptchaIcon></ImageCaptchaIcon>
+              <div>
+                <el-icon :size="22">
+                  <ChatDotSquare></ChatDotSquare>
+                </el-icon>
+              </div>
             </div>
             <div class="image_captcha_input">
               <el-input v-model="loginForm.captcha" placeholder="请输入图像验证码"></el-input>
@@ -43,15 +55,14 @@
         </div>
       </el-form-item>
       <div class="login_ele">
-        <el-button type="primary" class="login_button" @click="userAccountPasswordLoginHandel">登 录</el-button>
+        <el-button type="success" plain class="login_button" @click="userAccountPasswordLoginHandel">登 录</el-button>
       </div>
     </el-form>
   </div>
 </template>
 <script setup>
 import {ref, reactive} from 'vue'
-import {Picture} from '@element-plus/icons-vue'
-import {AccountIcon, PasswordIcon, ImageCaptchaIcon} from "@/components/icons/index.js";
+import {ChatDotSquare, Lock, Picture, User} from '@element-plus/icons-vue'
 import router from "@/router.js";
 import {imageCaptchaIdGet, imageCaptchaImageGet, userAccountPasswordLogin} from '@/apis/login';
 
@@ -187,11 +198,6 @@ function accountValidator(rule, value, callback) {
   height: 40px;
 }
 
-::v-deep .el-form-item__error {
-  width: 100%;
-  display: flex;
-  margin-left: 43px;
-}
 
 .el-icon {
   margin-top: 10px;
@@ -213,6 +219,10 @@ function accountValidator(rule, value, callback) {
   height: 40px;
 }
 
+.el-button{
+  font-size: 20px;
+}
+
 .item_form .el-input-group--prepend {
   height: 40px;
   width: 330px;
@@ -227,6 +237,6 @@ function accountValidator(rule, value, callback) {
 ::v-deep .el-form-item__error {
   width: 100%;
   display: flex;
-  margin-left: 45px;
+  margin-left: 42px;
 }
 </style>

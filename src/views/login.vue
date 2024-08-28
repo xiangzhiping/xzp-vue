@@ -1,6 +1,6 @@
 <template>
   <div class="login_container">
-    <div class="login_container_header">XIANGZHIPING</div>
+    <div class="login_container_header"><div class="linear_gradient">XIANGZHIPING</div></div>
     <div class="login_container_pane">
       <transition :name="transitionName">
         <keep-alive>
@@ -15,11 +15,13 @@
           class="login_container_tab"
           :class="{ active: index === currentIndex }"
       >
-        <div class="login_container_icon" @click="changeTab(index)">
-          <el-icon :size="22">
-            <component :is="tab.icon" class="route_icon"/>
-          </el-icon>
-        </div>
+        <el-tooltip :content="tab.name"  effect="light">
+          <div class="login_container_icon" @click="changeTab(index)">
+            <el-icon :size="22">
+              <component :is="tab.icon" class="route_icon"/>
+            </el-icon>
+          </div>
+        </el-tooltip>
       </div>
     </div>
   </div>
@@ -27,7 +29,7 @@
 
 <script setup>
 import {ref, computed} from "vue";
-import {Odometer, User, Lock, Key, Setting, Message} from '@element-plus/icons-vue'
+import {User, Unlock, UserFilled, ChatLineSquare} from '@element-plus/icons-vue'
 import AccountPasswordLogin from '@/components/login/account_password_login.vue';
 import CaptchaLogin from '@/components/login/captcha_login.vue';
 import ForgetPassword from "@/components/login/forget_password.vue";
@@ -36,9 +38,9 @@ import Register from "@/components/login/register_account.vue";
 const currentComponent = ref(AccountPasswordLogin);
 const tabs = [
   {name: '账号密码登录', icon: User},
-  {name: '验证码登录', icon: Message},
-  {name: '忘记密码', icon: Lock},
-  {name: '注册账号', icon: Key}
+  {name: '验证码登录', icon: ChatLineSquare},
+  {name: '忘记密码', icon: Unlock},
+  {name: '注册账号', icon: UserFilled}
 ];
 const currentIndex = ref(0);
 const previousIndex = ref(currentIndex.value);
@@ -81,18 +83,22 @@ const changeTab = async (index) => {
 .login_container_header {
   width: 100%;
   height: 50px;
-  color: #909399;
-  font-size: 25px;
+  font-size: 23px;
   font-weight: bold;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-image: linear-gradient(to right, #ff0000, #00ff00, #0000ff);
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  background-size: 200px 100%; /* 设置背景的宽度为自动，高度为100% */
 }
 
 .login_container_footer {
   width: 100%;
   height: 50px;
-  background: #c5ddfa;
   border-bottom: 1px solid var(--el-border-color);
   display: flex;
   justify-content: center;
@@ -103,7 +109,6 @@ const changeTab = async (index) => {
   width: 35px;
   height: 35px;
   border-radius: 50%;
-  background: #34fd2d;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -114,14 +119,13 @@ const changeTab = async (index) => {
   height: 50px;
   cursor: pointer;
   display: flex;
-  color: #909399;
+  color: #bbbbbb;
   justify-content: center;
   align-items: center;
 }
 
 .login_container_tab.active {
-  background: #ffffff;
-  color: #409EFF;
+  color: #67C23A;
 }
 
 .login_container_pane {
