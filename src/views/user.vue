@@ -98,7 +98,7 @@ const changeTab = async (index) => {
 .slide-fade-left-leave-active,
 .slide-fade-right-enter-active,
 .slide-fade-right-leave-active {
-  transition: all 1s ease;
+  transition: all 0.5s ease;
   position: absolute;
   top: 0;
   left: 0;

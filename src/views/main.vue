@@ -70,5 +70,6 @@ import headerCpt from "@/components/main/header.vue";
   border-left: 1px solid var(--el-border-color);
   border-top: 1px solid var(--el-border-color);
   box-shadow: var(--el-box-shadow-lighter);
+  overflow: hidden;
 }
 </style>
