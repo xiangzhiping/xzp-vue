@@ -24,8 +24,6 @@ const toggleSelected = (index) => {
 const routes = [
   {name: '仪表盘', path: '/dashboard', icon: Odometer},
   {name: '用户管理', path: '/user', icon: User},
-  {name: '用户权限管理', path: '/user/permission', icon: Lock},
-  {name: '用户角色管理', path: '/user/role', icon: Key},
   {name: '系统管理', path: '/setting', icon: Setting},
 ];
 

@@ -334,17 +334,6 @@ const userStatusOptions = reactive([
   height: 30px;
 }
 
-:deep(.el-pager) {
-  margin-top: 2px;
-}
-
-:deep(.btn-prev) {
-  display: none;
-}
-
-:deep(.btn-next) {
-  display: none;
-}
 
 :deep(.el-range-separator) {
   display: none;
