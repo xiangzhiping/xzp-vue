@@ -1,14 +1,12 @@
 <template>
   <div class="login_container">
-    <div class="login_container_header">
-      XIANGZHIPING
-    </div>
+    <div class="login_container_header">XIANGZHIPING</div>
     <div class="login_container_pane">
-            <transition :name="transitionName">
-              <keep-alive>
-                <component :is="currentComponent"></component>
-              </keep-alive>
-            </transition>
+      <transition :name="transitionName">
+        <keep-alive>
+          <component :is="currentComponent"></component>
+        </keep-alive>
+      </transition>
     </div>
     <div class="login_container_footer">
       <div
@@ -16,11 +14,12 @@
           :key="index"
           class="login_container_tab"
           :class="{ active: index === currentIndex }"
-          @click="changeTab(index)"
       >
-        <el-icon :size="22">
-          <component :is="tab.icon" class="route_icon"/>
-        </el-icon>
+        <div class="login_container_icon" @click="changeTab(index)">
+          <el-icon :size="22">
+            <component :is="tab.icon" class="route_icon"/>
+          </el-icon>
+        </div>
       </div>
     </div>
   </div>
@@ -34,7 +33,7 @@ import CaptchaLogin from '@/components/login/captcha_login.vue';
 import ForgetPassword from "@/components/login/forget_password.vue";
 import Register from "@/components/login/register_account.vue";
 
-const currentComponent = ref(User);
+const currentComponent = ref(AccountPasswordLogin);
 const tabs = [
   {name: '账号密码登录', icon: User},
   {name: '验证码登录', icon: Message},
@@ -78,21 +77,33 @@ const changeTab = async (index) => {
   flex-direction: column;
   overflow: hidden;
 }
-.login_container_header{
+
+.login_container_header {
   width: 100%;
   height: 50px;
+  color: #909399;
   font-size: 25px;
   font-weight: bold;
-  background: #409EFF;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .login_container_footer {
   width: 100%;
   height: 50px;
-  background: #13ce66;
+  background: #c5ddfa;
   border-bottom: 1px solid var(--el-border-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login_container_icon {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: #34fd2d;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -109,7 +120,7 @@ const changeTab = async (index) => {
 }
 
 .login_container_tab.active {
-  background: #cadef3;
+  background: #ffffff;
   color: #409EFF;
 }
 
