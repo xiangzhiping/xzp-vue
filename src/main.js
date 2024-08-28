@@ -6,6 +6,7 @@ import router from './router.js'
 import 'element-plus/dist/index.css';
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import 'element-plus/theme-chalk/dark/css-vars.css'
+
 const app = createApp(App)
 app.use(ElementPlus, {locale: zhCn,})
 app.use(createPinia())
